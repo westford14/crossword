@@ -1,22 +1,22 @@
 #!/bin/bash
-FORMATTEDDATE=$(date '+%Y-%m-%d')
-FILENAME="daily-$FORMATTEDDATE.puz"
-URL="http://www.nytimes.com/svc/crosswords/v2/puzzle/$FILENAME"
-USERNAME="jonathanfosdick91@gmail.com"
-PASSWORD="COaxing1"
-AUTHURL="https://myaccount.nytimes.com/mobile/login/smart/index.html?EXIT_URI=http%3A%2F%2Fwww.nytimes.com%2Fcrosswords%2Findex.html%3Fpage%3Dhome&_r=0"
-DIRECTORY="dailyCrosswords"
+todaysFormattedDate=$(date '+%Y-%m-%d')
+crosswordName="daily-$todaysFormattedDate.puz"
+linkToCrossword="http://www.nytimes.com/svc/crosswords/v2/puzzle/$crosswordName"
+username="jonathanfosdick91@gmail.com"
+password="COaxing1"
+authUrl="https://myaccount.nytimes.com/mobile/login/smart/index.html?EXIT_URI=http%3A%2F%2Fwww.nytimes.com%2Fcrosswords%2Findex.html%3Fpage%3Dhome&_r=0"
+DIR="dailyCrosswords"
 
-if [ ! -d "$DIRECTORY" ]; then
-	mkdir $DIRECTORY
+if [ ! -d "$DIR" ]; then
+	mkdir $DIR
 fi
 
 #auth
-curl -b cookies -c cookies --data "username=$USERNAME&password=$PASSWORD&remember_me=1" $AUTHURL
+curl -b cookies -c cookies --data "username=$username&password=$password&remember_me=1" $authUrl
 
 #give it a sec
-sleep 5
+sleep 1
 
 #get today's crossword using auth cookie
-curl -b cookies -c cookies "$URL" > "$DIRECTORY/$FILENAME"
+curl -b cookies -c cookies "$linkToCrossword" > "$DIR/$crosswordName"
 
